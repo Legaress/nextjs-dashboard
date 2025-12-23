@@ -1,0 +1,9 @@
+{
+    "json.schemas": [
+  {
+    "fileMatch": ["devcontainer.json"],
+    "url": "./.devcontainer/devContainer.schema.json"
+  }
+]
+
+}

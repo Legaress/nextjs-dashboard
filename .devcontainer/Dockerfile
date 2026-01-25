@@ -1,15 +1,15 @@
-FROM node:lts-alpine
+FROM node:trixie-slim
 
-# Dependencias del sistema
-RUN apk add --no-cache \
-    bash git openssh \
-    libc6-compat \
-    python3 make g++ \
-    tini
+RUN echo 'Acquire::ForceIPv4 "true";' > /etc/apt/apt.conf.d/99force-ipv4
 
-# Corepack / pnpm
-RUN corepack enable && corepack prepare pnpm@latest --activate
+
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends \
+    build-essential \
+    git \
+    openssh-client \
+ && rm -rf /var/lib/apt/lists/*
+
+RUN npm install -g pnpm
 
 USER node
-
-ENTRYPOINT ["/sbin/tini", "--"]
